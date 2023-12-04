@@ -46,6 +46,33 @@ export async function verifyToken(
     }
 }
 
+export async function refreshToken(
+    req: Request, res: Response, next: NextFunction
+) {
+    const { email } = req.body;
+    const header = req.headers["authorization"]?.split(" ")[1];
+
+    if (
+        (await blockList).includes(header as string) ||
+        (await blockList).includes(
+            req.headers["authorization"]
+                ?.split(" ")[1] as string ?? ""
+        )
+    ) {
+        return res.status(401).send({
+            message: "Unauthorized",
+            error: [
+                "Unexpected Auth Header. Please Try Again Without an Auth Header."
+            ]
+        });
+    }
+
+    (await blockList).push(header as string);
+    await BlockList.updateOne({ id: 1 }, { blocked: (await blockList) });
+
+    createToken(req, res, next);
+}
+
 export async function createToken(
     req: Request, res: Response, next: NextFunction
 ) {

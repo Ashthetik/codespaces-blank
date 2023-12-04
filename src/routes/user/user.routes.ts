@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import UserController from "../../controllers/users/user.controller";
-import { verifyToken } from "../../controllers/auth/base.auth";
+import { verifyToken } from "../../controllers/auth/jwt.controller";
 
 const router = express.Router();
 

@@ -1,7 +1,7 @@
 import express from "express";
-import { verifyToken } from "../../controllers/auth/base.auth";
+import { verifyToken } from "../../controllers/auth/jwt.controller";
 import { WhoIsController } from "../../controllers/osint/osint.ctr";
-import { decryptBody } from "../../controllers/auth/rsa.auth";
+import { decryptBody } from "../../controllers/auth/rsa.controller";
 
 const router = express.Router();
 
